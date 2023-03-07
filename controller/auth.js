@@ -1,6 +1,7 @@
 const bcryptjs = require('bcryptjs')
 
 const { checkGoogle } = require('../helpers/check_google')
+const { createJWT } = require('../helpers/create_jwt')
 const User = require('../models/User')
 
 const login = async (req, res) => {
