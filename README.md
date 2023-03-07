@@ -8,7 +8,7 @@ This is my first API that you can test with to practice data fetching. You can f
 
 ## How to use:
 
-You have to take into account _remembering the username and password created._ You do not stress about password security. _We use a hash and a salt to maintain data security._
+You have to take into account _remembering the username and password created or using sign-in with Google._ You do not stress about password security. _We use a hash and a salt to maintain data security._
 
 ### JSON
 
@@ -31,7 +31,7 @@ JSON: {
 GET: https://testapi-production-00ce.up.railway.app/api/users
 ```
 
-- To create new users:
+- To create new users, considering this endpoint and the previous JSON:
 ```
 POST: https://testapi-production-00ce.up.railway.app/api/users
 ```

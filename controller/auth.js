@@ -1,7 +1,6 @@
 const bcryptjs = require('bcryptjs')
 
 const { checkGoogle } = require('../helpers/check_google')
-const { createJWT } = require('../helpers/create_jwt')
 const User = require('../models/User')
 
 const login = async (req, res) => {
@@ -47,9 +46,7 @@ const googleSignIn = async (req, res) => {
 
     if (!user.state) return res.status(401).json({ msg: 'User does not exist.' })
 
-    const token = await createJWT(user.id)
-
-    res.status(200).json({ msg: 'Google Sing In ok', user, token })
+    res.status(200).json({ msg: 'Google Sing In ok' })
   } catch (err) {
     console.log(err)
     res.status(400).json({ msg: 'Google Sign In failed.' })

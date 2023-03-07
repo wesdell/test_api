@@ -38,15 +38,15 @@
         const data = { idToken }
         
         let url = ( window.location.hostname.includes('localhost') )
-                  ? 'http://localhost:3000/api/auth/google'
-                  : 'https://testapi-production-00ce.up.railway.app/api/auth/google';
+                  ? 'http://localhost:3000/api'
+                  : 'https://testapi-production-00ce.up.railway.app/api';
 
-        fetch( url, {
+        fetch( `${url}/auth/google`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify( data )
         })
-        .then( resp => resp.json() )
+        .then(() => window.location.replace(`${url}/users`))
         .catch( console.log );
       }
     </script>
