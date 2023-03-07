@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="google-signin-client_id"
+      content="211016565256-k4ujnbens157bdmuk45ukksne494kqsv.apps.googleusercontent.com"
+    />
+    <title>Google Sign In</title>
+  </head>
+  <body>
+    <h1>Google Sign In</h1>
+    <hr />
+    <h2>How this API works?</h2>
+    <a href="https://github.com/wesdell/test_api#readme" target="_blank">See here</a>
+    <hr>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+      data-client_id="211016565256-k4ujnbens157bdmuk45ukksne494kqsv.apps.googleusercontent.com"
+      data-context="signin"
+      data-ux_mode="popup"
+      data-callback="onSignIn"
+      data-itp_support="true">
+    </div>
+    <div class="g_id_signin"
+      data-type="standard"
+      data-shape="rectangular"
+      data-theme="outline"
+      data-text="signin_with"
+      data-size="large"
+      data-logo_alignment="left">
+    </div>
+    <script>
+      function onSignIn (response) {
+        const { credential: idToken } = response
+        const data = { idToken }
+        
+        let url = ( window.location.hostname.includes('localhost') )
+                  ? 'http://localhost:3000/api/auth/google'
+                  : 'https://testapi-production-00ce.up.railway.app/api/auth/google';
+
+        fetch( url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify( data )
+        })
+        .then( resp => resp.json() )
+        .catch( console.log );
+      }
+    </script>
+  </body>
+</html>

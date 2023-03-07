@@ -12,10 +12,6 @@ const authRoutes = require('./routes/auth')
 
 const PORT = process.env.PORT
 
-const error404 = (req, res) => {
-  res.status(404).json({ message: 'This road does not exist.' })
-}
-
 app
   // app config
   .set('port', PORT)
@@ -25,9 +21,12 @@ app
   .use(cors())
   .use(express.json())
   // middleware routing
+  .use('/', express.static('public'))
   .use('/api/users', userRoutes)
   .use('/api/auth', authRoutes)
-  .use('*', error404)
+  .use('*', (req, res) => {
+    res.status(404).json({ message: 'This road does not exist.' })
+  })
 
 app.listen(PORT, () => {
   console.log(`Server is running at: http://localhost:${PORT}`)

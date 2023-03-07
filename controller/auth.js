@@ -1,5 +1,6 @@
 const bcryptjs = require('bcryptjs')
 
+const { checkGoogle } = require('../helpers/check_google')
 const { createJWT } = require('../helpers/create_jwt')
 const User = require('../models/User')
 
@@ -25,6 +26,37 @@ const login = async (req, res) => {
   }
 }
 
+const googleSignIn = async (req, res) => {
+  const { idToken } = req.body
+  try {
+    const { name, email, img } = await checkGoogle(idToken)
+
+    // check if user exists, if not we create it
+    let user = await User.findOne({ email })
+    if (!user) {
+      const data = {
+        name,
+        email,
+        img,
+        password: '.',
+        google: true
+      }
+      user = new User(data)
+      await user.save()
+    }
+
+    if (!user.state) return res.status(401).json({ msg: 'User does not exist.' })
+
+    const token = await createJWT(user.id)
+
+    res.status(200).json({ msg: 'Google Sing In ok', user, token })
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({ msg: 'Google Sign In failed.' })
+  }
+}
+
 module.exports = {
-  login
+  login,
+  googleSignIn
 }
