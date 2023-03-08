@@ -5,16 +5,14 @@ const { check } = require('express-validator')
 const { checkFields, checkJWT, checkAdminRole } = require('../middleware')
 
 const { getUser, postUser, putUser, deleteUser } = require('../controller/user')
-const { checkRole, checkEmail, checkUser } = require('../helpers/check_database')
+const {
+  checkRole,
+  checkEmail,
+  checkUser
+} = require('../helpers/check_database')
 
 router
-  .get(
-    '/',
-    [
-      checkFields
-    ],
-    getUser
-  )
+  .get('/', getUser)
   .post(
     '/',
     [

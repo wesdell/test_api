@@ -1,7 +1,7 @@
 require('../models/connection')
 const bcryptjs = require('bcryptjs')
 
-const User = require('../models/User')
+const { User } = require('../models')
 
 const getUser = async (req, res) => {
   const { prev = 0, next = 5 } = req.query

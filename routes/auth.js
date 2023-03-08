@@ -12,14 +12,13 @@ router
     [
       check('email', 'Email is required').isEmail(),
       check('password', 'Password is required').not().isEmpty(),
-      checkFields],
+      checkFields
+    ],
     login
   )
   .post(
     '/google',
-    [
-      check('idToken', 'idToken is required').not().isEmpty(),
-      checkFields],
+    [check('idToken', 'idToken is required').not().isEmpty(), checkFields],
     googleSignIn
   )
 

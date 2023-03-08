@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const SECRET = process.env.SECRET_JWT
 
+// creates a JWT using user id
 const createJWT = (uid) => {
   return new Promise((resolve, reject) => {
     const payload = { uid }
