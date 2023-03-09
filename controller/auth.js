@@ -58,7 +58,9 @@ const googleSignIn = async (req, res) => {
       return res.status(401).json({ msg: 'User does not exist.' })
     }
 
-    res.status(200).json({ msg: 'Google Sing In ok' })
+    const token = await createJWT(user.id)
+
+    res.status(200).json({ msg: 'Google Sing In ok', token })
   } catch (err) {
     console.log(err)
     res.status(400).json({ msg: 'Google Sign In failed.' })

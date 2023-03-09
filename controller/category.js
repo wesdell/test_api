@@ -18,7 +18,7 @@ const getCategories = async (req, res) => {
 const getCategory = async (req, res) => {
   const { id } = req.params
   const category = await Category.findOne({
-    $and: [{ id }, { state: true }]
+    $and: [{ _id: id }, { state: true }]
   }).populate('user', 'name')
 
   if (!category) {

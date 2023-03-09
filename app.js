@@ -10,6 +10,7 @@ const morgan = require('morgan')
 const ROUTES = {
   auth: './routes/auth',
   category: './routes/category',
+  product: './routes/product',
   user: './routes/user'
 }
 
@@ -28,6 +29,7 @@ app
   .use('/', express.static('public'))
   .use('/api/auth', require(ROUTES.auth))
   .use('/api/categories', require(ROUTES.category))
+  .use('/api/products', require(ROUTES.product))
   .use('/api/users', require(ROUTES.user))
   .use('*', (req, res) => {
     res.status(404).json({ message: 'This road does not exist.' })
