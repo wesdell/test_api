@@ -35,10 +35,35 @@ const checkProduct = async (id) => {
   }
 }
 
+const checkCollection = (collection, validCollections) => {
+  const collectionExist = validCollections.includes(collection)
+  if (!collectionExist) {
+    throw new Error('The collection that you search does not exist.')
+  }
+  return true
+}
+
+const searchDocInCollection = async (collection, id) => {
+  let model
+  switch (collection) {
+    case 'users':
+      model = await User.findById(id)
+      break
+    case 'products':
+      model = await Product.findById(id)
+      break
+    default:
+      throw new Error('Collection not provided, review on middleware.')
+  }
+  return model
+}
+
 module.exports = {
   checkRole,
   checkEmail,
   checkUser,
   checkCategory,
-  checkProduct
+  checkProduct,
+  checkCollection,
+  searchDocInCollection
 }
