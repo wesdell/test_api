@@ -4,12 +4,16 @@ const fs = require('fs')
 const cloudinary = require('cloudinary').v2
 cloudinary.config(process.env.CLOUDINARY_URL)
 
-const { uploadFile } = require('../helpers')
+// TEST API DEVELOPMENT
+// const { uploadFile } = require('../helpers')
+
 const { searchDocInCollection } = require('../helpers')
 
+// send the file as the response
 const showFile = async (req, res) => {
   const { collection, id } = req.params
   try {
+    // checks in whick collection is the doc
     const model = await searchDocInCollection(collection, id)
 
     if (!model) {
@@ -18,6 +22,7 @@ const showFile = async (req, res) => {
         .json({ msg: `Not exist ${collection} with id: ${id}` })
     }
 
+    // if the collection has an image, send it
     if (model.img) {
       const pathFile = path.join(__dirname, '../uploads', collection, model.img)
       if (fs.existsSync(pathFile)) {
@@ -25,6 +30,7 @@ const showFile = async (req, res) => {
       }
     }
 
+    // if the collection has NOT an image, put this by default
     const defaultPath = path.join(__dirname, '../assets/no-image.jpg')
     res.status(200).sendFile(defaultPath)
   } catch (err) {
@@ -33,18 +39,19 @@ const showFile = async (req, res) => {
   }
 }
 
-const loadFile = async (req, res) => {
-  try {
-    const fileName = await uploadFile(
-      req.files,
-      ['png', 'jpg', 'jpge', 'gif'],
-      'images'
-    )
-    res.status(200).json({ fileName })
-  } catch (err) {
-    res.status(400).json({ msg: err })
-  }
-}
+// TEST API DEVELOPMENT
+// const loadFile = async (req, res) => {
+//   try {
+//     const fileName = await uploadFile(
+//       req.files,
+//       ['png', 'jpg', 'jpge', 'gif'],
+//       'images'
+//     )
+//     res.status(200).json({ fileName })
+//   } catch (err) {
+//     res.status(400).json({ msg: err })
+//   }
+// }
 
 // TEST API DEVELOPMENT - ONLY CAN BE ACTIVE ONE
 // const updateFile = async (req, res) => {
@@ -84,6 +91,7 @@ const loadFile = async (req, res) => {
 const updateFile = async (req, res) => {
   const { collection, id } = req.params
   try {
+    // checks in whick collection is the doc
     const model = await searchDocInCollection(collection, id)
 
     if (!model) {
@@ -100,6 +108,7 @@ const updateFile = async (req, res) => {
       cloudinary.uploader.destroy(publicId)
     }
 
+    // sends the new image to cloudinary
     const { tempFilePath } = req.files.file
     const { secure_url: secureUrl } = await cloudinary.uploader.upload(
       tempFilePath
@@ -116,4 +125,4 @@ const updateFile = async (req, res) => {
   }
 }
 
-module.exports = { showFile, loadFile, updateFile }
+module.exports = { showFile, updateFile }

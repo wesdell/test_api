@@ -3,7 +3,7 @@ const { check } = require('express-validator')
 const { Router } = require('express')
 const router = Router()
 
-const { showFile, loadFile, updateFile } = require('../controller/upload')
+const { showFile, updateFile } = require('../controller/upload')
 const { checkFields, checkFile } = require('../middleware')
 const { checkCollection } = require('../helpers')
 
@@ -19,7 +19,7 @@ router
     ],
     showFile
   )
-  .post('/', checkFile, loadFile)
+  // .post('/', checkFile, loadFile)
   .put(
     '/:collection/:id',
     [

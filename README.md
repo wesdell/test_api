@@ -257,10 +257,35 @@ JSON: {
 DELETE: https://testapi-production-00ce.up.railway.app/api/products/*HERE-MONGO-ID*
 ```
 
+---
+
+### 5. Uploads
+
+#### To GET the image of any kind of collection, based on the id doc:
+
 ```
-Headers: {
-        key-token-jwt: *HERE JWT THAT YOU GENERATED*
-      }
+GET: https://testapi-production-00ce.up.railway.app/api/upload/**HERE-COLLECTION-NAME**/**HERE-MONGO-ID**
+```
+
+#### To PUT an image of any kind of collection, based on the id doc:
+
+```
+PUT: https://testapi-production-00ce.up.railway.app/api/upload/**HERE-COLLECTION-NAME**/**HERE-MONGO-ID**
+```
+
+```
+Extensions permitted: PNG, JPG, JPGE, GIF.
+```
+
+```
+Collections permitted: users, products.
+```
+
+```
+Multipart Form: 
+// The name to submit it HAS TO BE -> file
+file : yourfile.any-extension-permitted
+------ ------------------------------------------------------
 ```
 
 ## Common functionalities:
