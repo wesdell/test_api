@@ -1,5 +1,6 @@
-const path = require('path')
-const fs = require('fs')
+// TEST API DEVELOPMENT
+// const path = require('path')
+// const fs = require('fs')
 
 const cloudinary = require('cloudinary').v2
 cloudinary.config(process.env.CLOUDINARY_URL)
@@ -9,35 +10,36 @@ cloudinary.config(process.env.CLOUDINARY_URL)
 
 const { searchDocInCollection } = require('../helpers')
 
+// TEST API DEVELOPMENT
 // send the file as the response
-const showFile = async (req, res) => {
-  const { collection, id } = req.params
-  try {
-    // checks in whick collection is the doc
-    const model = await searchDocInCollection(collection, id)
+// const showFile = async (req, res) => {
+//   const { collection, id } = req.params
+//   try {
+//     // checks in whick collection is the doc
+//     const model = await searchDocInCollection(collection, id)
 
-    if (!model) {
-      return res
-        .status(400)
-        .json({ msg: `Not exist ${collection} with id: ${id}` })
-    }
+//     if (!model) {
+//       return res
+//         .status(400)
+//         .json({ msg: `Not exist ${collection} with id: ${id}` })
+//     }
 
-    // if the collection has an image, send it
-    if (model.img) {
-      const pathFile = path.join(__dirname, '../uploads', collection, model.img)
-      if (fs.existsSync(pathFile)) {
-        return res.status(200).sendFile(pathFile)
-      }
-    }
+//     // if the collection has an image, send it
+//     if (model.img) {
+//       const pathFile = path.join(__dirname, '../uploads', collection, model.img)
+//       if (fs.existsSync(pathFile)) {
+//         return res.status(200).sendFile(pathFile)
+//       }
+//     }
 
-    // if the collection has NOT an image, put this by default
-    const defaultPath = path.join(__dirname, '../assets/no-image.jpg')
-    res.status(200).sendFile(defaultPath)
-  } catch (err) {
-    console.log(err)
-    res.status(400).json({ msg: 'Something was wrong' })
-  }
-}
+//     // if the collection has NOT an image, put this by default
+//     const defaultPath = path.join(__dirname, '../assets/no-image.jpg')
+//     res.status(200).sendFile(defaultPath)
+//   } catch (err) {
+//     console.log(err)
+//     res.status(400).json({ msg: 'Something was wrong' })
+//   }
+// }
 
 // TEST API DEVELOPMENT
 // const loadFile = async (req, res) => {
@@ -125,4 +127,4 @@ const updateFile = async (req, res) => {
   }
 }
 
-module.exports = { showFile, updateFile }
+module.exports = { updateFile }
